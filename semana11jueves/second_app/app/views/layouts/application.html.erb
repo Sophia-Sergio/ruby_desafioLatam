@@ -6,9 +6,18 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css">
-  </head>
+  </head> 
+   <style>
+    ul{
+      list-style: none;
+    }
+    li{
+      color: white;
+    }
+  </style>
 
   <body>
+
     <%= render 'layouts/navbar' %>
     <%= yield %>
   </body>
