@@ -1,0 +1,10 @@
+<%= form_with model: Post.new, :html => { :multipart => true }, :remote => true  do |c|%>
+  <%= c.label :title %>
+  <div>
+    <%= c.text_field :title %>
+  </div>
+  <div>
+    <%= c.file_field :image %>
+  </div>
+  <%= c.submit :enviar%>
+<% end %>
