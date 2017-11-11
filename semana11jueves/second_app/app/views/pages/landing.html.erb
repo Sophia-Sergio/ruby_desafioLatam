@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Students en el Landing</h1>
+
+<table class="table">
+  <thead>
+    <tr class="row">
+      <th class="column">Name</th>
+      <th class="column">Age</th>
+      <th class="column" colspan="3">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @students.each do |student| %>
+      <tr class="row">
+        <td class="column"><%= student.name %></td>
+        <td class="column"><%= student.age %></td>
+        <td class="column"><%= link_to 'Show', student , class: 'btn btn-primary' %></td>
+        <td class="column"><%= link_to 'Edit', edit_student_path(student)  , class: 'btn btn-success'%></td>
+        <td class="column"><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning'%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
