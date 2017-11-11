@@ -1,9 +1,0 @@
-alert('success!');
-<% if remotipart_submitted? %>
-  alert('submitted via remotipart');
-  $('#posts-table').append('<tr id="post-<%= @post.id%>" %>><th><%= @post.title %></th><th><%= link_to 'x', @post, 'method':'delete', 'remote':'true' %></th></tr>');
-<% else %>
-  alert('submitted via native jquery-ujs')
-<% end %>
-
-
