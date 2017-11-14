@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<p>
+    <strong>Name:</strong>
+    <%= @company.name %>
+  </p>
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>
+
+
+<h1>New Category</h1>
+
+<%= render 'employees/form', company: @company %>
+<div class="well" style="background:rgb(39, 22, 22); color:white">
+  <span style="width:200px; display:inline-block">Producto</span>
+  <span style="width:200px; display:inline-block">Precio</span>
+  <span style="width:200px; display:inline-block">Email</span>
+  <span style="width:200px; display:inline-block">Acciones</span>
+</div>
+<% @company.employees.each do |employee| %>
+ <div class="well">
+   <span style="width:200px; display:inline-block"><%= employee.first_name %></span>
+   <span style="width:200px; display:inline-block"><%= employee.last_name %></span>
+   <span style="width:200px; display:inline-block"><%= employee.email %></span>
+   <span style="width:200px; display:inline-block"><%= link_to 'eliminar', company_employee_path(@company, employee), :method => 'delete' %></span>
+ </div>
+
+<% end %>

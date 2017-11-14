@@ -1,0 +1,26 @@
+<%= form_with(model: [ @company, Employee.new ] ) do |form| %>
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, id: :employee_first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, id: :employee_last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :email %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :area_id %>
+    <%= form.select :area_id, Area.pluck(:name, :id) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
