@@ -1,0 +1,9 @@
+<% @todos.each do |todo|%>
+  <div class="well"> <%= todo.description %> 
+    <span> <%= link_to 'ver', todo_path(todo), method: 'post' %></span>
+    <span> <%= link_to 'destruir', todo_path(todo), method: 'delete' %></span>
+    <span> <%= link_to 'marcar como completo', complete_todo_path(todo), method: 'get' %></span>
+  </div>
+<% end %>
+
+<%= link_to 'crear todo', new_path %>

@@ -1,0 +1,10 @@
+<%= form_with(model: @todo, local: true, method: 'patch') do |f| %>
+
+  <div class="well"> 
+    <%= f.text_field :description, id: :todo_description, :value => @todo.description %>
+    <span> <%= f.text_field :completed, id: :todo_completed, :value => (@todo.completed)? 'true' : 'false' , :disabled => true%></span> 
+  </div>
+  <div class="actions">
+    <%= f.submit 'modificar' %>
+  </div>
+<% end %>

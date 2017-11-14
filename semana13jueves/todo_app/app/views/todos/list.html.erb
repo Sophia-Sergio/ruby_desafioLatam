@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="well" style="background: black; color:white">Completadas</div>
+      <% @todos.where(:completed => true).each do |todo|%>
+        <div class="well"><%= todo.description %></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">      
+    <div class="row">
+        <div class="well" style="background: black; color:white">NO Completadas</div>
+        <% @todos.where(:completed => false).each do |todo|%>
+        <div class="well"><%= todo.description %></div>
+      <% end %>
+    </div>
+  </div>
+</div>
