@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
+
+<h1>New Category</h1>
+
+<%= render 'products/form', category: @category %>
+<div class="well" style="background:rgb(39, 22, 22); color:white">
+  <span style="width:200px; display:inline-block">Producto</span>
+  <span style="width:200px; display:inline-block">Precio</span>
+  <span style="width:200px; display:inline-block">Acciones</span>
+</div>
+<% @category.products.each do |product| %>
+ <div class="well">
+   <span style="width:200px; display:inline-block"><%= product.name %></span>
+   <span style="width:200px; display:inline-block"><%= product.price %></span>
+   <span style="width:200px; display:inline-block"><%= link_to 'eliminar', category_product_path(@category, product), :method => 'delete' %></span>
+ </div>
+
+<% end %>
+
+<%= link_to 'Back', categories_path %>
+
+
