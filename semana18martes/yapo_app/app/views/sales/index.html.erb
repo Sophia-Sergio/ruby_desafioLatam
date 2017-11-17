@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Products</h1>
+
+<table class="table" style="width:800px">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>Precio</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+        <td><%= product.price %></td>
+        <!--
+        <td><%= link_to 'Show', user_product_path(product.user_id, product) %></td>
+        <td><%= link_to 'Edit', edit_user_product_path(product.user_id, product) %></td>
+        <td><%= link_to 'Destroy', user_product_path(product.user_id, product), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        -->
+      </tr>
+    <% end %>
+    <tr>
+        <td colspan="2">Total</td>
+        <td ><%= Product.all.pluck(:price).sum %></td>
+      </tr>
+  </tbody>
+</table>
+
+<br>

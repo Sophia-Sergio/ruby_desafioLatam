@@ -1,0 +1,34 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<%= root_path %>">Pictory</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <% if user_signed_in? %>
+          <li> <%= link_to 'Nuevo Producto', new_user_product_path(current_user.id) %></li>
+        <% end %>
+        <% if current_user.present? %>
+          <% if current_user.admin %>
+          <li><a href="<%= sales_path %>" data-method="get">Ventas</a></li>
+          <% end %>
+        <% end %>
+        <% if !user_signed_in? %>
+          <li><a href="<%= new_user_registration_path %>">Registrase</a></li>
+        <% end %>
+        <% if !user_signed_in? %>
+          <li><a href="<%= new_user_session_path %>">Iniciar Sesión</a></li>
+        <% end %>
+        <% if user_signed_in? %>
+          <li><a href="<%= destroy_user_session_path%>" data-method="delete">Cerrar Sesión</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

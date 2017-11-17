@@ -1,0 +1,2896 @@
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (262.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (221.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateHistories (20170703175956)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "histories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "picture" varchar, "content" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170703175956"]]
+  [1m[35m (97.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to DeviseCreateUsers (20171116211834)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171116211834"]]
+  [1m[35m (208.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-11-16 21:19:22.281829"], ["updated_at", "2017-11-16 21:19:22.281829"]]
+  [1m[35m (79.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:12:41 -0300
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (16.3ms)
+  Rendered shared/_navbar.html.erb (0.6ms)
+Completed 200 OK in 2116ms (Views: 1991.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:15:52 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (2.5ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (4.6ms)
+  Rendered shared/_navbar.html.erb (193.7ms)
+Completed 500 Internal Server Error in 244ms (ActiveRecord: 2.5ms)
+
+
+  
+ActionView::Template::Error (undefined method `logged?' for #<#<Class:0x00000004be9048>:0x007ff318727af0>
+Did you mean?  logger?
+               logger
+               logger=):
+    12: 
+    13:     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    14:       <ul class="nav navbar-nav">
+    15:         <% if !logged? %>
+    16:           <li><a href="<%= new_user_session %>">Ingreso</a></li>
+    17:         <% end %>
+    18:         <% if !logged? %>
+  
+app/views/shared/_navbar.html.erb:15:in `_app_views_shared__navbar_html_erb__4073586687543578060_70341046177560'
+app/views/layouts/application.html.erb:20:in `_app_views_layouts_application_html_erb__1491571399237546352_70341045463600'
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:16:01 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.4ms)
+  Rendered shared/_navbar.html.erb (167.5ms)
+Completed 500 Internal Server Error in 198ms (ActiveRecord: 0.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `logged?' for #<#<Class:0x00000004be9048>:0x007ff30c05ba48>
+Did you mean?  logger?
+               logger
+               logger=):
+    12: 
+    13:     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    14:       <ul class="nav navbar-nav">
+    15:         <% if logged? %>
+    16:           <li><a href="<%= new_user_session %>">Ingreso</a></li>
+    17:         <% end %>
+    18:         <% if logged? %>
+  
+app/views/shared/_navbar.html.erb:15:in `_app_views_shared__navbar_html_erb__4073586687543578060_70340928627240'
+app/views/layouts/application.html.erb:20:in `_app_views_layouts_application_html_erb__1491571399237546352_70341038768300'
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:17:47 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (11.1ms)
+  Rendered shared/_navbar.html.erb (199.6ms)
+Completed 500 Internal Server Error in 290ms (ActiveRecord: 0.4ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_sign_in?' for #<#<Class:0x00000004be9048>:0x007ff3191af400>
+Did you mean?  user_signed_in?):
+    12: 
+    13:     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    14:       <ul class="nav navbar-nav">
+    15:         <% if !user_sign_in? %>
+    16:           <li><a href="<%= new_user_session_path %>">Ingreso</a></li>
+    17:         <% end %>
+    18:         <% if !user_sign_in? %>
+  
+app/views/shared/_navbar.html.erb:15:in `_app_views_shared__navbar_html_erb__4073586687543578060_70341044475480'
+app/views/layouts/application.html.erb:20:in `_app_views_layouts_application_html_erb__1491571399237546352_70341037671800'
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:18:05 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (3.5ms)
+  Rendered shared/_navbar.html.erb (6.3ms)
+Completed 200 OK in 45ms (Views: 42.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:18:10 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (166.0ms)
+  Rendered shared/_navbar.html.erb (0.8ms)
+Completed 200 OK in 224ms (Views: 196.5ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2017-11-16 20:18:12 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.4ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (7.7ms)
+  Rendered shared/_navbar.html.erb (1.1ms)
+Completed 200 OK in 52ms (Views: 49.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2017-11-16 20:18:20 -0300
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UDRYL36hKFl61EFXqgxoUFsKSu9bStBCgoE/qC6B1lc1GWcKdXdL0QiOSF3qmqtlc4lKdwCT1rbuh+cpixjpbA==", "user"=>{"email"=>"san.storres@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "san.storres@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (4.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["email", "san.storres@gmail.com"], ["encrypted_password", "$2a$11$qolc0ixitynT3pyn4tcpqeSTZMEVCGn5jfZq47AEsEnaEOifjLU5u"], ["created_at", "2017-11-16 23:18:20.360526"], ["updated_at", "2017-11-16 23:18:20.360526"]]
+  [1m[35m (151.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[33mUPDATE "users" SET "sign_in_count" = ?, "current_sign_in_at" = ?, "last_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_ip" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["sign_in_count", 1], ["current_sign_in_at", "2017-11-16 23:18:20.527449"], ["last_sign_in_at", "2017-11-16 23:18:20.527449"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_ip", "127.0.0.1"], ["updated_at", "2017-11-16 23:18:20.528728"], ["id", 1]]
+  [1m[35m (219.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 749ms (ActiveRecord: 378.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:18:20 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (1.0ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (5.6ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (5.0ms)
+Completed 200 OK in 52ms (Views: 49.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:18:43 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (5.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.0ms)
+Completed 200 OK in 49ms (Views: 43.2ms | ActiveRecord: 0.6ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 20:18:45 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"JGPWCT0b4HqK3F95u6e8BK7nCAFs4CkBG5Qk0SOwg5+lkabgGcU16sJ3TMiF9+77Z0IypedJfXQqkEgQIVrP4w=="}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.7ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 59ms (ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:18:45 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.7ms)
+  Rendered shared/_navbar.html.erb (2.8ms)
+Completed 200 OK in 48ms (Views: 46.1ms | ActiveRecord: 0.2ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddUserToHistories (20171116232005)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "histories" ADD "user_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_histories_on_user_id" ON "histories" ("user_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171116232005"]]
+  [1m[35m (182.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" ORDER BY "histories"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddNameAndUsernameAndAdminToHistories (20171116232344)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "histories" ADD "name" varchar[0m
+  [1m[35m (6.6ms)[0m  [1m[35mALTER TABLE "histories" ADD "username" varchar[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "histories" ADD "admin" boolean[0m
+  [1m[35mSQL (3.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171116232344"]]
+  [1m[35m (177.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddNameAndUsernameAndAdminToHistories (20171116232344)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ahistories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "picture" varchar DEFAULT NULL, "content" text DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer DEFAULT NULL, "name" varchar DEFAULT NULL, "username" varchar DEFAULT NULL, "admin" boolean DEFAULT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "tindex_ahistories_on_user_id" ON "ahistories" ("user_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "ahistories" ("id","title","picture","content","created_at","updated_at","user_id","name","username","admin")
+                     SELECT "id","title","picture","content","created_at","updated_at","user_id","name","username","admin" FROM "histories"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "histories"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "histories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "picture" varchar DEFAULT NULL, "content" text DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer DEFAULT NULL, "name" varchar DEFAULT NULL, "username" varchar DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ahistories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ahistories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_histories_on_user_id" ON "histories" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "histories" ("id","title","picture","content","created_at","updated_at","user_id","name","username")
+                     SELECT "id","title","picture","content","created_at","updated_at","user_id","name","username" FROM "ahistories"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "ahistories"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ahistories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "picture" varchar DEFAULT NULL, "content" text DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer DEFAULT NULL, "name" varchar DEFAULT NULL, "username" varchar DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_ahistories_on_user_id" ON "ahistories" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "ahistories" ("id","title","picture","content","created_at","updated_at","user_id","name","username")
+                     SELECT "id","title","picture","content","created_at","updated_at","user_id","name","username" FROM "histories"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "histories"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "histories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "picture" varchar DEFAULT NULL, "content" text DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer DEFAULT NULL, "name" varchar DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ahistories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ahistories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX "index_histories_on_user_id" ON "histories" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "histories" ("id","title","picture","content","created_at","updated_at","user_id","name")
+                     SELECT "id","title","picture","content","created_at","updated_at","user_id","name" FROM "ahistories"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "ahistories"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ahistories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "picture" varchar DEFAULT NULL, "content" text DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer DEFAULT NULL, "name" varchar DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_ahistories_on_user_id" ON "ahistories" ("user_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "ahistories" ("id","title","picture","content","created_at","updated_at","user_id","name")
+                     SELECT "id","title","picture","content","created_at","updated_at","user_id","name" FROM "histories"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "histories"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "histories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "picture" varchar DEFAULT NULL, "content" text DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ahistories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ahistories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_histories_on_user_id" ON "histories" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "histories" ("id","title","picture","content","created_at","updated_at","user_id")
+                     SELECT "id","title","picture","content","created_at","updated_at","user_id" FROM "ahistories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ahistories"[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20171116232344"]]
+  [1m[35m (208.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddNameAndUsernameAndAdminToUsers (20171116232344)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddNameAndUsernameAndAdminToUsers (20171116232344)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (5.7ms)[0m  [1m[35mALTER TABLE "users" ADD "name" varchar[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" ADD "username" varchar[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" ADD "admin" boolean[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171116232344"]]
+  [1m[35m (183.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_histories_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:32:05 -0300
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (7.4ms)
+  Rendered shared/_navbar.html.erb (2.7ms)
+Completed 200 OK in 72ms (Views: 52.5ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:39:30 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (3.0ms)
+  Rendered shared/_navbar.html.erb (1.1ms)
+Completed 200 OK in 55ms (Views: 50.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:39:32 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.4ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (7.6ms)
+  Rendered shared/_navbar.html.erb (1.6ms)
+Completed 200 OK in 65ms (Views: 42.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2017-11-16 20:39:34 -0300
+  
+ActionController::RoutingError (undefined method `before_filter' for Users::RegistrationsController:Class
+Did you mean?  before_action):
+  
+app/controllers/users/registrations_controller.rb:4:in `<class:RegistrationsController>'
+app/controllers/users/registrations_controller.rb:1:in `<top (required)>'
+Started GET "/users/sign_up" for 127.0.0.1 at 2017-11-16 20:39:47 -0300
+Processing by Users::RegistrationsController#new as HTML
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.2ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (10.7ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 68ms (Views: 46.4ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2017-11-16 20:40:13 -0300
+Processing by Users::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"wCxc5GCuwLAqe4T6rZH98hKQzqP2VnN9OWjcMRvwdgWvei+0k71MiaI27xRkB9hbLpwEMbVfL3A0zcBKCIbsog==", "user"=>{"email"=>"san.storres1@gmail.com", "name"=>"sergio", "username"=>"torres", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "san.storres1@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "name", "username") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "san.storres1@gmail.com"], ["encrypted_password", "$2a$11$twpNMY7uVVfU.dmE8WCvauTFGcPkueafycJVfEsF0rP8dl6cANgiq"], ["created_at", "2017-11-16 23:40:13.930874"], ["updated_at", "2017-11-16 23:40:13.930874"], ["name", "sergio"], ["username", "torres"]]
+  [1m[35m (135.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[33mUPDATE "users" SET "sign_in_count" = ?, "current_sign_in_at" = ?, "last_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_ip" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["sign_in_count", 1], ["current_sign_in_at", "2017-11-16 23:40:14.069436"], ["last_sign_in_at", "2017-11-16 23:40:14.069436"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_ip", "127.0.0.1"], ["updated_at", "2017-11-16 23:40:14.070598"], ["id", 2]]
+  [1m[35m (135.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 469ms (ActiveRecord: 272.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:40:14 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.7ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (15.3ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.6ms)
+Completed 200 OK in 74ms (Views: 58.5ms | ActiveRecord: 2.3ms)
+
+
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:45:43 -0300
+Processing by HistoriesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.3ms)
+  Rendered shared/_navbar.html.erb (1.8ms)
+Completed 200 OK in 77ms (Views: 38.1ms | ActiveRecord: 1.9ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 20:45:47 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"TN0Uq11k3b8qkjp+9XvKL0EU8Ty6BWWi3qdh2gsd9tgji2f7rndRhqLfUZA87e+GfRg7rvkMOa/TAn2hGGtsfw=="}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 5ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:45:47 -0300
+Processing by HistoriesController#index as HTML
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:45:47 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (9.9ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 69ms (Views: 67.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:46:14 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.1ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (7.8ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 58ms (Views: 38.9ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:46:20 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (9.0ms)
+  Rendered shared/_navbar.html.erb (1.3ms)
+Completed 200 OK in 69ms (Views: 61.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:46:29 -0300
+Processing by HistoriesController#index as HTML
+Completed 401 Unauthorized in 3ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:46:29 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.6ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 81ms (Views: 59.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:47:27 -0300
+  
+ActionController::RoutingError (undefined local variable or method `index' for HistoriesController:Class):
+  
+app/controllers/histories_controller.rb:3:in `<class:HistoriesController>'
+app/controllers/histories_controller.rb:1:in `<top (required)>'
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:47:35 -0300
+Processing by HistoriesController#index as HTML
+Completed 401 Unauthorized in 9ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:47:35 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.5ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 88ms (Views: 59.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:48:39 -0300
+Processing by HistoriesController#index as HTML
+Completed 401 Unauthorized in 3ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:48:39 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.4ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.8ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 67ms (Views: 40.7ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 20:49:36 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (3.6ms)
+  Rendered shared/_navbar.html.erb (2.7ms)
+Completed 200 OK in 48ms (Views: 39.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/histories/new" for 127.0.0.1 at 2017-11-16 20:49:42 -0300
+Processing by HistoriesController#new as HTML
+Completed 401 Unauthorized in 6ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:49:42 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (3.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (10.1ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 87ms (Views: 40.8ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/histories/new" for 127.0.0.1 at 2017-11-16 20:51:18 -0300
+Processing by HistoriesController#new as HTML
+Completed 401 Unauthorized in 3ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:51:18 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.4ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 72ms (Views: 45.9ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-11-16 20:51:24 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"roTtwNUtvLipBXHe0pShS5DXuY2Ivzz2rkuMW0pZ1Umt980AiaE9/03o3GC74eRvRoth6MOM23pwejYY9zQVVQ==", "user"=>{"email"=>"san.storres@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "san.storres@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.6ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", "2017-11-16 23:51:24.508831"], ["sign_in_count", 2], ["updated_at", "2017-11-16 23:51:24.511808"], ["id", 1]]
+  [1m[35m (79.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/histories/new
+Completed 302 Found in 293ms (ActiveRecord: 82.5ms)
+
+
+Started GET "/histories/new" for 127.0.0.1 at 2017-11-16 20:51:24 -0300
+Processing by HistoriesController#new as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering histories/new.html.erb within layouts/application
+  Rendered histories/_form.html.erb (22.6ms)
+  Rendered histories/new.html.erb within layouts/application (26.9ms)
+  Rendered shared/_navbar.html.erb (1.4ms)
+Completed 200 OK in 126ms (Views: 81.5ms | ActiveRecord: 3.4ms)
+
+
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 20:51:30 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dG+376vsGnX6KFms2ndQGnUm2+Q/DbyPyTzk8LwTA4kyuu8QCBPJRaP2l/P+XfalDfzv6lh1AioMHyeqmpB8/A==", "history"=>{"title"=>"asdasdada", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"adasdasdasddas"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.3ms)
+
+
+  
+NoMethodError (undefined method `user=' for nil:NilClass):
+  
+app/controllers/histories_controller.rb:29:in `create'
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 20:51:51 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dG+376vsGnX6KFms2ndQGnUm2+Q/DbyPyTzk8LwTA4kyuu8QCBPJRaP2l/P+XfalDfzv6lh1AioMHyeqmpB8/A==", "history"=>{"title"=>"asdasdada", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"adasdasdasddas"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+Completed 500 Internal Server Error in 53ms (ActiveRecord: 3.0ms)
+
+
+  
+NoMethodError (undefined method `user=' for nil:NilClass):
+  
+app/controllers/histories_controller.rb:29:in `create'
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 20:52:04 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"dG+376vsGnX6KFms2ndQGnUm2+Q/DbyPyTzk8LwTA4kyuu8QCBPJRaP2l/P+XfalDfzv6lh1AioMHyeqmpB8/A==", "history"=>{"title"=>"asdasdada", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"adasdasdasddas"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+Completed 500 Internal Server Error in 46ms (ActiveRecord: 2.3ms)
+
+
+  
+NoMethodError (undefined method `user_id=' for nil:NilClass):
+  
+app/controllers/histories_controller.rb:29:in `create'
+Started GET "/histories" for 127.0.0.1 at 2017-11-16 20:52:22 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (3.2ms)
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (41.5ms)
+Completed 200 OK in 92ms (Views: 85.8ms | ActiveRecord: 4.7ms)
+
+
+Started GET "/histories/new" for 127.0.0.1 at 2017-11-16 20:52:27 -0300
+Processing by HistoriesController#new as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering histories/new.html.erb within layouts/application
+  Rendered histories/_form.html.erb (2.6ms)
+  Rendered histories/new.html.erb within layouts/application (3.8ms)
+  Rendered shared/_navbar.html.erb (1.4ms)
+Completed 200 OK in 65ms (Views: 39.7ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 20:52:29 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gQgIHAIZMP5C6/09tldnbSP17Z5gjZGYHGQsFm7KYcRLxOLVqWZrCv67bTjrIn1EA+TV4+irufRo4rqOCxxd5Q==", "history"=>{"title"=>"asdadads", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"addasads"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 0.3ms)
+
+
+  
+NoMethodError (undefined method `user=' for #<History:0x007ff3190fbdd8>
+Did you mean?  user_id=):
+  
+app/controllers/histories_controller.rb:29:in `create'
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 20:52:39 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"DZyKc0ZV4yX9CRwFwtOAa6boF3o29HOyY5pTL8A/MpdLSdKM5aowFaTX0lrm+SbU3jIjdFGMzRemuZB15rxN4g==", "history"=>{"title"=>"asdadads", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"addasads"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "histories" ("title", "picture", "content", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["title", "asdadads"], ["picture", nil], ["content", "addasads"], ["created_at", "2017-11-16 23:52:39.834065"], ["updated_at", "2017-11-16 23:52:39.834065"]]
+  [1m[35m (153.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/histories/1
+Completed 302 Found in 230ms (ActiveRecord: 160.5ms)
+
+
+Started GET "/histories/1" for 127.0.0.1 at 2017-11-16 20:52:40 -0300
+Processing by HistoriesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mHistory Load (0.5ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" WHERE "histories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering histories/show.html.erb within layouts/application
+  Rendered histories/show.html.erb within layouts/application (3.3ms)
+  Rendered shared/_navbar.html.erb (1.8ms)
+Completed 200 OK in 137ms (Views: 68.9ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:03:06 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (13.2ms)
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (50.3ms)
+Completed 200 OK in 116ms (Views: 111.5ms | ActiveRecord: 3.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:04:46 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (10.0ms)
+  Rendered shared/_navbar.html.erb (0.7ms)
+Completed 200 OK in 67ms (Views: 65.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:06:23 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (8.2ms)
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.4ms)
+
+
+  
+ActionView::Template::Error (undefined method `user' for #<History:0x007ff319c48290>
+Did you mean?  user_id):
+    18:           <p><%= history.content.truncate(150)  %></p>
+    19:           <p><%= link_to 'Show', history, class: "btn btn-primary" %> 
+    20:             <% if user_signed_in? %>
+    21:                 <% if current_user = history.user %>
+    22:                   <%= link_to 'Edit', edit_history_path(history), class: "btn btn-warning" %>
+    23:                 <% end %>              
+    24:               <%= link_to 'Destroy', history, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></p>
+  
+app/views/histories/index.html.erb:21:in `block in _app_views_histories_index_html_erb__2990561692893192895_70341043561540'
+app/views/histories/index.html.erb:11:in `each'
+app/views/histories/index.html.erb:11:in `_app_views_histories_index_html_erb__2990561692893192895_70341043561540'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:06:36 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (4.3ms)
+  Rendered shared/_navbar.html.erb (0.8ms)
+Completed 200 OK in 52ms (Views: 50.6ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:06:58 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (11.8ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 57ms (Views: 54.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:07:33 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (5.4ms)
+  Rendered shared/_navbar.html.erb (1.6ms)
+Completed 200 OK in 31ms (Views: 29.2ms | ActiveRecord: 0.4ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 21:07:36 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"x7R3G+I2vY5wiJXFFu8elYeLP6QCvUH+oVg2fVMcgouBYS/kQcluvilWW5oyxbgq/1ELqmXF/1tke/UndZ/9/g=="}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 19ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:07:36 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.6ms)
+  Rendered shared/_navbar.html.erb (2.1ms)
+Completed 200 OK in 47ms (Views: 45.4ms | ActiveRecord: 0.2ms)
+
+
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 00:08:10.076240"], ["id", 1]]
+  [1m[35m (188.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:08:19 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.7ms)
+  Rendered shared/_navbar.html.erb (3.1ms)
+Completed 200 OK in 33ms (Views: 31.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:08:24 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"6nMSs4wCOggZ6Mk62p/n1kSuSAC4hCoTCpeHyYhbhRj+RgU/1912rHT/VNo2NF02GbjhGc8WBGLKGBexNfDGEA==", "user"=>{"email"=>"san.storres@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "san.storres@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "last_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", "2017-11-17 00:08:24.898027"], ["last_sign_in_at", "2017-11-16 23:51:24.508831"], ["sign_in_count", 3], ["updated_at", "2017-11-17 00:08:24.898617"], ["id", 1]]
+  [1m[35m (197.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 367ms (ActiveRecord: 198.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:08:25 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (8.0ms)
+  Rendered shared/_navbar.html.erb (0.9ms)
+Completed 200 OK in 48ms (Views: 41.5ms | ActiveRecord: 1.8ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 21:08:29 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"eGH1es5ZhY9AS6zhG96iylcj8lYJ1jgcsDIyjcUcR9IeosDEUP9euVil5n3+DgcaRiQiDtyezEoqXE3z7f7I1A=="}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 8ms (ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:08:29 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (3.3ms)
+  Rendered shared/_navbar.html.erb (1.1ms)
+Completed 200 OK in 40ms (Views: 37.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:08:32 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (2.4ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (9.3ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 62ms (Views: 59.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:08:37 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"GtiqHakR7V83azBdVm6+vBJlGAiZ3DlcFADGURTSddgEinAMSZpGjNjZjz8MpA/hcOE7+3oU5pTpzTbZYM0O2g==", "user"=>{"email"=>"san.storres1@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "san.storres1@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", "2017-11-17 00:08:37.206366"], ["sign_in_count", 2], ["updated_at", "2017-11-17 00:08:37.208386"], ["id", 2]]
+  [1m[35m (133.2ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 302ms (ActiveRecord: 135.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:08:37 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (4.2ms)
+  Rendered shared/_navbar.html.erb (2.2ms)
+Completed 200 OK in 49ms (Views: 46.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:14:42 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (40.4ms)
+  Rendered shared/_navbar.html.erb (0.7ms)
+Completed 200 OK in 83ms (Views: 70.4ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:16:35 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (40.7ms)
+  Rendered shared/_navbar.html.erb (3.0ms)
+Completed 200 OK in 103ms (Views: 97.2ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:17:35 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (36.6ms)
+  Rendered shared/_navbar.html.erb (0.9ms)
+Completed 200 OK in 69ms (Views: 64.2ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/user_histories/2" for 127.0.0.1 at 2017-11-16 21:17:36 -0300
+Processing by HistoriesController#user_histories as HTML
+  Parameters: {"authenticity_token"=>"wN7mtIfnA8ep+RV+k37XxIrFJ/bxoA9d1Ot1Fw1LSeQT+faEN3R2RB1AuE0ES7PqdThkg7GOwmy99A8SzrIhTw==", "id"=>"2"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 222ms (ActiveRecord: 0.5ms)
+
+
+  
+NameError (undefined local variable or method `currrent_user' for #<HistoriesController:0x007ff31a7ed370>
+Did you mean?  current_user):
+  
+app/controllers/histories_controller.rb:12:in `user_histories'
+Started GET "/user_histories/2" for 127.0.0.1 at 2017-11-16 21:17:52 -0300
+Processing by HistoriesController#user_histories as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHistory Load (0.6ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" WHERE "histories"."id" = ? LIMIT ?[0m  [["id", nil], ["LIMIT", 1]]
+Completed 404 Not Found in 54ms (ActiveRecord: 3.7ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find History with 'id'={:user_id=>"2"}):
+  
+app/controllers/histories_controller.rb:12:in `user_histories'
+Started GET "/user_histories/2" for 127.0.0.1 at 2017-11-16 21:18:12 -0300
+Processing by HistoriesController#user_histories as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/user_histories.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories" WHERE "histories"."user_id" = ?[0m  [["user_id", 2]]
+  Rendered histories/user_histories.html.erb within layouts/application (4.8ms)
+  Rendered shared/_navbar.html.erb (3.0ms)
+Completed 200 OK in 96ms (Views: 48.9ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/histories/new" for 127.0.0.1 at 2017-11-16 21:18:16 -0300
+Processing by HistoriesController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/new.html.erb within layouts/application
+  Rendered histories/_form.html.erb (4.3ms)
+  Rendered histories/new.html.erb within layouts/application (6.8ms)
+  Rendered shared/_navbar.html.erb (0.9ms)
+Completed 200 OK in 102ms (Views: 85.6ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 21:18:19 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"5zvHmtd2Sv4H68iwl20f86YW8C5vqQ32dfczH8DZHiV1ZCuecIAfQ/C3c2oI62DlTmsOkza7Qd2lItPexlJInQ==", "history"=>{"title"=>"asdasd", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"adsasdadsda"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.8ms)[0m  [1m[32mINSERT INTO "histories" ("title", "picture", "content", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["title", "asdasd"], ["picture", nil], ["content", "adsasdadsda"], ["created_at", "2017-11-17 00:18:19.899904"], ["updated_at", "2017-11-17 00:18:19.899904"]]
+  [1m[35m (198.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/histories/2
+Completed 302 Found in 215ms (ActiveRecord: 201.3ms)
+
+
+Started GET "/histories/2" for 127.0.0.1 at 2017-11-16 21:18:20 -0300
+Processing by HistoriesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" WHERE "histories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/show.html.erb within layouts/application
+  Rendered histories/show.html.erb within layouts/application (1.4ms)
+  Rendered shared/_navbar.html.erb (2.3ms)
+Completed 200 OK in 34ms (Views: 29.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/user_histories/2" for 127.0.0.1 at 2017-11-16 21:18:21 -0300
+Processing by HistoriesController#user_histories as HTML
+  Parameters: {"authenticity_token"=>"AVMQTySWELIYFJ6mR5S3i3mbbmMnxfGalkuvwNfScFDSdAB/lAVlMaytM5XQodOlhmYtFmfrPKv/VNXFFCsY+w==", "id"=>"2"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/user_histories.html.erb within layouts/application
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT "histories".* FROM "histories" WHERE "histories"."user_id" = ?[0m  [["user_id", 2]]
+  Rendered histories/user_histories.html.erb within layouts/application (3.2ms)
+  Rendered shared/_navbar.html.erb (0.9ms)
+Completed 200 OK in 48ms (Views: 42.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/user_histories/2" for 127.0.0.1 at 2017-11-16 21:18:26 -0300
+Processing by HistoriesController#user_histories as HTML
+  Parameters: {"authenticity_token"=>"HwrxzOvU7tEpTDEW09U0x4rMbECIVYRsyhBZVtgEmkLMLeH8W0ebUp31nCVE4FDpdTEvNch7SV2jDyNTG/3y6Q==", "id"=>"2"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/user_histories.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories" WHERE "histories"."user_id" = ?[0m  [["user_id", 2]]
+  Rendered histories/user_histories.html.erb within layouts/application (3.2ms)
+  Rendered shared/_navbar.html.erb (0.7ms)
+Completed 200 OK in 37ms (Views: 31.0ms | ActiveRecord: 0.8ms)
+
+
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" ORDER BY "histories"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mHistory Load (0.5ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" ORDER BY "histories"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/histories/new" for 127.0.0.1 at 2017-11-16 21:19:16 -0300
+Processing by HistoriesController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/new.html.erb within layouts/application
+  Rendered histories/_form.html.erb (2.2ms)
+  Rendered histories/new.html.erb within layouts/application (3.0ms)
+  Rendered shared/_navbar.html.erb (0.7ms)
+Completed 200 OK in 45ms (Views: 20.5ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/histories" for 127.0.0.1 at 2017-11-16 21:19:19 -0300
+Processing by HistoriesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Xwf6BzTVhfPS3Q+TkWwTY34ONu8Qy89kwUwQekjPBP/NWBYDkyPQTiWBtEkO6mx1lnPIUknZg08RmfC7TkRSRw==", "history"=>{"title"=>"asdasdasd", "remote_picture_url"=>"", "picture_cache"=>"", "content"=>"asdasdasd"}, "commit"=>"Enviar"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Unpermitted parameter: :picture_cache
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "histories" ("title", "picture", "content", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?)[0m  [["title", "asdasdasd"], ["picture", nil], ["content", "asdasdasd"], ["created_at", "2017-11-17 00:19:19.840093"], ["updated_at", "2017-11-17 00:19:19.840093"], ["user_id", 2]]
+  [1m[35m (258.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/histories/3
+Completed 302 Found in 268ms (ActiveRecord: 260.3ms)
+
+
+Started GET "/histories/3" for 127.0.0.1 at 2017-11-16 21:19:20 -0300
+Processing by HistoriesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" WHERE "histories"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/show.html.erb within layouts/application
+  Rendered histories/show.html.erb within layouts/application (1.6ms)
+  Rendered shared/_navbar.html.erb (1.4ms)
+Completed 200 OK in 57ms (Views: 46.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/user_histories/2" for 127.0.0.1 at 2017-11-16 21:19:22 -0300
+Processing by HistoriesController#user_histories as HTML
+  Parameters: {"authenticity_token"=>"Nczlc1Yri4l3HxsRpk2nOoelKdu6gaNme+cGXuX1ZVHm6/VD5rj+CsOmtiIxeMMUeFhqrvqvblcS+HxbJgwN+g==", "id"=>"2"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering histories/user_histories.html.erb within layouts/application
+  [1m[36mHistory Load (0.4ms)[0m  [1m[34mSELECT "histories".* FROM "histories" WHERE "histories"."user_id" = ?[0m  [["user_id", 2]]
+  Rendered histories/user_histories.html.erb within layouts/application (4.8ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 72ms (Views: 66.4ms | ActiveRecord: 0.9ms)
+
+
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT  "histories".* FROM "histories" ORDER BY "histories"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 21:19:36 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"tyrtc3Sdqfhpor7bYrj/m2cbdp/uF5jicXxIUBNWDPlkDf1DxA7ce90bE+j1jZu1mOY16q45VdMYYzJV0K9kUg=="}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 10ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:19:36 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (4.0ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 28ms (Views: 27.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:29:16 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (20.4ms)
+  Rendered shared/_navbar.html.erb (5.1ms)
+Completed 500 Internal Server Error in 98ms (ActiveRecord: 2.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `admin' for nil:NilClass):
+    24:         <% if user_signed_in? %>
+    25:           <li><a href="<%= user_histories_path(current_user) %>" data-method="get">Historias de <%= current_user.name%></a></li>
+    26:         <% end %>
+    27:         <% if current_user.admin %>
+    28:         <li><a href="<%= users_path(current_user) %>" data-method="get">Panel de Control</a></li>
+    29:         <% end %>
+    30:         
+  
+app/views/shared/_navbar.html.erb:27:in `_app_views_shared__navbar_html_erb__4073586687543578060_70341041307160'
+app/views/layouts/application.html.erb:20:in `_app_views_layouts_application_html_erb__1491571399237546352_70341049031400'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:29:42 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (6.1ms)
+  Rendered shared/_navbar.html.erb (2.4ms)
+Completed 500 Internal Server Error in 43ms (ActiveRecord: 0.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `admin?' for nil:NilClass):
+    24:         <% if user_signed_in? %>
+    25:           <li><a href="<%= user_histories_path(current_user) %>" data-method="get">Historias de <%= current_user.name%></a></li>
+    26:         <% end %>
+    27:         <% if current_user.admin? %>
+    28:         <li><a href="<%= users_path(current_user) %>" data-method="get">Panel de Control</a></li>
+    29:         <% end %>
+    30:         
+  
+app/views/shared/_navbar.html.erb:27:in `_app_views_shared__navbar_html_erb__4073586687543578060_70341045644040'
+app/views/layouts/application.html.erb:20:in `_app_views_layouts_application_html_erb__1491571399237546352_70341049461220'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:33:23 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (7.6ms)
+  Rendered shared/_navbar.html.erb (4.1ms)
+Completed 200 OK in 98ms (Views: 95.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:34:28 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.9ms)
+  Rendered shared/_navbar.html.erb (2.8ms)
+Completed 200 OK in 45ms (Views: 44.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:39:30 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for UsersController):
+  
+actionpack (5.1.2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:39:35 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.7ms)
+  Rendered shared/_navbar.html.erb (15.6ms)
+Completed 200 OK in 57ms (Views: 55.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2017-11-16 21:40:19 -0300
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for UsersController):
+  
+actionpack (5.1.2) lib/abstract_controller/base.rb:119:in `process'
+actionview (5.1.2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:40:21 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.8ms)
+  Rendered shared/_navbar.html.erb (6.1ms)
+Completed 200 OK in 64ms (Views: 62.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:41:22 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.1ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (12.0ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 52ms (Views: 42.8ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:41:24 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.3ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (11.5ms)
+  Rendered shared/_navbar.html.erb (2.9ms)
+Completed 200 OK in 103ms (Views: 77.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:41:34 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 62ms (Views: 29.1ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:41:35 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"0+xReFixIThW/ms68tlRW5h3Z8iL5U1CaRRf3itRlPjeJfG3/j6XfFrAy7d1id07rTivBCqgobYnxgAdpV2lPw==", "user"=>{"email"=>"san.storres1@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "san.storres1@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "last_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", "2017-11-17 00:41:35.731843"], ["last_sign_in_at", "2017-11-17 00:08:37.206366"], ["sign_in_count", 3], ["updated_at", "2017-11-17 00:41:35.732440"], ["id", 2]]
+  [1m[35m (69.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 267ms (ActiveRecord: 71.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:41:35 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.5ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (29.8ms)
+  Rendered shared/_navbar.html.erb (1.1ms)
+Completed 200 OK in 88ms (Views: 67.3ms | ActiveRecord: 2.7ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 21:41:48 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"KkIp/ms586m2Lmx7NuxZHvg5vR2nFJwxhPlmNfszeyTIidZxKSkc68TFuz/VdoF/iF8Vfmv1ewUsvCLz/QHjvw=="}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:41:48 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (2.8ms)
+  Rendered shared/_navbar.html.erb (0.9ms)
+Completed 200 OK in 33ms (Views: 31.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:41:49 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (5.9ms)
+  Rendered shared/_navbar.html.erb (3.9ms)
+Completed 200 OK in 45ms (Views: 43.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:41:50 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered shared/_navbar.html.erb (1.1ms)
+Completed 200 OK in 46ms (Views: 34.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-11-16 21:41:57 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"g8Tr1a+4UCobLvXXDe8E+PRC1ENXxZ2OWfBySdtfeACIL6rkALNgULRR/sRYSxsTl1ngyLt/aigxaqNjjpE2Hg==", "user"=>{"email"=>"san.storres@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "san.storres@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "last_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", "2017-11-17 00:41:58.126192"], ["last_sign_in_at", "2017-11-17 00:08:24.898027"], ["sign_in_count", 4], ["updated_at", "2017-11-17 00:41:58.127100"], ["id", 1]]
+  [1m[35m (223.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 401ms (ActiveRecord: 224.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:41:58 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.6ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (13.4ms)
+  Rendered shared/_navbar.html.erb (171.0ms)
+Completed 500 Internal Server Error in 244ms (ActiveRecord: 0.9ms)
+
+
+  
+ActionView::Template::Error (undefined method `users_path' for #<#<Class:0x007ff31a255160>:0x007ff319ee0e30>
+Did you mean?  user_session_path):
+    26:         <% end %>
+    27:         <% if current_user.present? %>
+    28:           <% if current_user.admin %>
+    29:           <li><a href="<%= users_path(current_user) %>" data-method="get">Panel de Control</a></li>
+    30:           <% end %>
+    31:         <% end %>
+    32:         
+  
+app/views/shared/_navbar.html.erb:29:in `_app_views_shared__navbar_html_erb__4073586687543578060_70341055945880'
+app/views/layouts/application.html.erb:20:in `_app_views_layouts_application_html_erb__1491571399237546352_70341044360580'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:43:02 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (43.0ms)
+  Rendered shared/_navbar.html.erb (2.3ms)
+Completed 200 OK in 120ms (Views: 109.5ms | ActiveRecord: 4.3ms)
+
+
+Started GET "/admins.1" for 127.0.0.1 at 2017-11-16 21:43:05 -0300
+  
+LoadError (Unable to autoload constant AdminsController, expected /home/sergio/Dropbox/desafio_latam/ruby_desafioLatam/semana15jueves/picture_app/app/controllers/admins_controller.rb to define it):
+  
+activesupport (5.1.2) lib/active_support/dependencies.rb:511:in `load_missing_constant'
+activesupport (5.1.2) lib/active_support/dependencies.rb:202:in `const_missing'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+activesupport (5.1.2) lib/active_support/dependencies.rb:582:in `get'
+activesupport (5.1.2) lib/active_support/dependencies.rb:613:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admins.1" for 127.0.0.1 at 2017-11-16 21:43:39 -0300
+  
+LoadError (Unable to autoload constant AdminsController, expected /home/sergio/Dropbox/desafio_latam/ruby_desafioLatam/semana15jueves/picture_app/app/controllers/admins_controller.rb to define it):
+  
+activesupport (5.1.2) lib/active_support/dependencies.rb:511:in `load_missing_constant'
+activesupport (5.1.2) lib/active_support/dependencies.rb:202:in `const_missing'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+activesupport (5.1.2) lib/active_support/dependencies.rb:582:in `get'
+activesupport (5.1.2) lib/active_support/dependencies.rb:613:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:43:42 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.5ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (13.3ms)
+  Rendered shared/_navbar.html.erb (3.9ms)
+Completed 200 OK in 59ms (Views: 57.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:43:44 -0300
+  
+LoadError (Unable to autoload constant AdminsController, expected /home/sergio/Dropbox/desafio_latam/ruby_desafioLatam/semana15jueves/picture_app/app/controllers/admins_controller.rb to define it):
+  
+activesupport (5.1.2) lib/active_support/dependencies.rb:511:in `load_missing_constant'
+activesupport (5.1.2) lib/active_support/dependencies.rb:202:in `const_missing'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+activesupport (5.1.2) lib/active_support/dependencies.rb:582:in `get'
+activesupport (5.1.2) lib/active_support/dependencies.rb:613:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:44:12 -0300
+  
+LoadError (Unable to autoload constant AdminsController, expected /home/sergio/Dropbox/desafio_latam/ruby_desafioLatam/semana15jueves/picture_app/app/controllers/admins_controller.rb to define it):
+  
+activesupport (5.1.2) lib/active_support/dependencies.rb:511:in `load_missing_constant'
+activesupport (5.1.2) lib/active_support/dependencies.rb:202:in `const_missing'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+activesupport (5.1.2) lib/active_support/dependencies.rb:582:in `get'
+activesupport (5.1.2) lib/active_support/dependencies.rb:613:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:44:16 -0300
+  
+LoadError (Unable to autoload constant AdminsController, expected /home/sergio/Dropbox/desafio_latam/ruby_desafioLatam/semana15jueves/picture_app/app/controllers/admins_controller.rb to define it):
+  
+activesupport (5.1.2) lib/active_support/dependencies.rb:511:in `load_missing_constant'
+activesupport (5.1.2) lib/active_support/dependencies.rb:202:in `const_missing'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+activesupport (5.1.2) lib/active_support/dependencies.rb:582:in `get'
+activesupport (5.1.2) lib/active_support/dependencies.rb:613:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:44:29 -0300
+  
+LoadError (Unable to autoload constant AdminsController, expected /home/sergio/Dropbox/desafio_latam/ruby_desafioLatam/semana15jueves/picture_app/app/controllers/admins_controller.rb to define it):
+  
+activesupport (5.1.2) lib/active_support/dependencies.rb:511:in `load_missing_constant'
+activesupport (5.1.2) lib/active_support/dependencies.rb:202:in `const_missing'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `const_get'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:269:in `block in constantize'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `each'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `inject'
+activesupport (5.1.2) lib/active_support/inflector/methods.rb:267:in `constantize'
+activesupport (5.1.2) lib/active_support/dependencies.rb:582:in `get'
+activesupport (5.1.2) lib/active_support/dependencies.rb:613:in `constantize'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:82:in `controller_class'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:43:in `controller'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:29:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:45:16 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (485.1ms)
+Completed 500 Internal Server Error in 494ms (ActiveRecord: 3.2ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `user' for #<#<Class:0x007ff31a0be4c8>:0x007ff31a0b6908>
+Did you mean?  @users):
+    13:   <tbody>
+    14:     <% @users.each do |company| %>
+    15:       <tr>
+    16:         <td><%= user.name %></td>
+    17:         <td><%= user.admin ? 'admin' : 'normal' %></td>
+    18:         <td><%= link_to 'Usuario admin', edit_user_path(user) %></td>
+    19:       </tr>
+  
+app/views/admins/index.html.erb:16:in `block in _app_views_admins_index_html_erb__2367005021361218213_70341045386840'
+app/views/admins/index.html.erb:14:in `_app_views_admins_index_html_erb__2367005021361218213_70341045386840'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:48:34 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (214.9ms)
+Completed 500 Internal Server Error in 222ms (ActiveRecord: 1.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `edit_user_path' for #<#<Class:0x007ff31a0be4c8>:0x007ff31b4b7bc8>
+Did you mean?  edit_user_password_path):
+    15:       <tr>
+    16:         <td><%= user.name %></td>
+    17:         <td><%= user.admin ? 'admin' : 'normal' %></td>
+    18:         <td><%= link_to 'Usuario admin', edit_user_path(user) %></td>
+    19:       </tr>
+    20:     <% end %>
+    21:   </tbody>
+  
+app/views/admins/index.html.erb:18:in `block in _app_views_admins_index_html_erb__2367005021361218213_70341055882360'
+app/views/admins/index.html.erb:14:in `_app_views_admins_index_html_erb__2367005021361218213_70341055882360'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:49:01 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (168.8ms)
+Completed 500 Internal Server Error in 173ms (ActiveRecord: 0.2ms)
+
+
+  
+ActionView::Template::Error (undefined method `edit_admin_path' for #<#<Class:0x007ff31a0be4c8>:0x007ff31b446b08>
+Did you mean?  edit_password_path):
+    15:       <tr>
+    16:         <td><%= user.name %></td>
+    17:         <td><%= user.admin ? 'admin' : 'normal' %></td>
+    18:         <td><%= link_to 'Usuario admin', edit_admin_path(user) %></td>
+    19:       </tr>
+    20:     <% end %>
+    21:   </tbody>
+  
+app/views/admins/index.html.erb:18:in `block in _app_views_admins_index_html_erb__2367005021361218213_70341055626380'
+app/views/admins/index.html.erb:14:in `_app_views_admins_index_html_erb__2367005021361218213_70341055626380'
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:49:38 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (28.9ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.2ms)
+Completed 200 OK in 77ms (Views: 74.1ms | ActiveRecord: 3.3ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:50:00 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Completed 406 Not Acceptable in 46ms (ActiveRecord: 0.4ms)
+
+
+  
+ActionController::UnknownFormat (AdminsController#edit is missing a template for this request format and variant.
+
+request.formats: ["text/html"]
+request.variant: []
+
+NOTE! For XHR/Ajax or API requests, this action would normally respond with 204 No Content: an empty white screen. Since you're loading it in a web browser, we assume that you expected to actually render a template, not nothing, so we're showing an error to be extra-clear. If you expect 204 No Content, carry on. That's what you'll get from an XHR or API request. Give it a shot.):
+  
+actionpack (5.1.2) lib/action_controller/metal/implicit_render.rb:53:in `default_render'
+actionpack (5.1.2) lib/action_controller/metal/basic_implicit_render.rb:4:in `block in send_action'
+actionpack (5.1.2) lib/action_controller/metal/basic_implicit_render.rb:4:in `tap'
+actionpack (5.1.2) lib/action_controller/metal/basic_implicit_render.rb:4:in `send_action'
+actionpack (5.1.2) lib/abstract_controller/base.rb:186:in `process_action'
+actionpack (5.1.2) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.1.2) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+activesupport (5.1.2) lib/active_support/callbacks.rb:131:in `run_callbacks'
+actionpack (5.1.2) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.2) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.2) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.2) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.2) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.2) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.2) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.2) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.2) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:50:50 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to 
+Completed 500 Internal Server Error in 230ms (ActiveRecord: 1.0ms)
+
+
+  
+NoMethodError (undefined method `index_url' for #<AdminsController:0x007ff3199430e0>
+Did you mean?  index):
+  
+app/controllers/admins_controller.rb:9:in `edit'
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:51:01 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+Redirected to 
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+Completed 500 Internal Server Error in 32ms (ActiveRecord: 2.6ms)
+
+
+  
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+NoMethodError (undefined method `to_model' for #<User::ActiveRecord_Relation:0x007ff31a6577e0>
+Did you mean?  to_xml):
+  
+app/controllers/admins_controller.rb:9:in `edit'
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:51:10 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 45ms (ActiveRecord: 1.7ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:51:11 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.2ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.5ms)
+Completed 200 OK in 67ms (Views: 63.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:51:14 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:51:14 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (3.3ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.3ms)
+Completed 200 OK in 52ms (Views: 48.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:51:37 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 30ms (ActiveRecord: 3.9ms)
+
+
+  
+ArgumentError (wrong number of arguments (given 0, expected 1)):
+  
+app/controllers/admins_controller.rb:9:in `edit'
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:51:53 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 00:51:53.781535"], ["id", 2]]
+  [1m[35m (147.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 191ms (ActiveRecord: 149.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:51:53 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (3.5ms)
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.3ms)
+Completed 200 OK in 56ms (Views: 52.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:51:57 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.7ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 00:51:57.231395"], ["id", 2]]
+  [1m[35m (131.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 144ms (ActiveRecord: 136.4ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:51:57 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.3ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.5ms)
+Completed 200 OK in 53ms (Views: 50.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:51:58 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (3.7ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 14ms (ActiveRecord: 4.0ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:51:58 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (3.7ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (6.9ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.7ms)
+Completed 200 OK in 60ms (Views: 52.2ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:52:04 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (1.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 8ms (ActiveRecord: 1.8ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:04 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.1ms)
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.5ms)
+Completed 200 OK in 38ms (Views: 34.0ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:52:09 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.5ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 00:52:09.989919"], ["id", 2]]
+  [1m[35m (157.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 175ms (ActiveRecord: 161.4ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:10 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.8ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.2ms)
+Completed 200 OK in 65ms (Views: 63.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:52:11 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 00:52:11.409626"], ["id", 2]]
+  [1m[35m (109.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 115ms (ActiveRecord: 110.6ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:11 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.1ms)
+Completed 200 OK in 32ms (Views: 27.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:52:12 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 4ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:12 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (4.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.7ms)
+Completed 200 OK in 50ms (Views: 48.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:52:13 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 6ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:13 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.3ms)
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (6.9ms)
+Completed 200 OK in 32ms (Views: 29.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:52:44 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 00:52:44.576029"], ["id", 2]]
+  [1m[35m (125.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 161ms (ActiveRecord: 127.6ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:44 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (3.2ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.4ms)
+Completed 200 OK in 71ms (Views: 69.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:52:46 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 00:52:46.031769"], ["id", 2]]
+  [1m[35m (69.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 78ms (ActiveRecord: 70.0ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:46 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (3.3ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.9ms)
+Completed 200 OK in 54ms (Views: 49.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:52:46 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 10ms (ActiveRecord: 0.6ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:46 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (3.8ms)
+  [1m[36mUser Load (2.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (6.2ms)
+Completed 200 OK in 51ms (Views: 46.6ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:52:59 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:52:59 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (1.9ms)
+Completed 200 OK in 33ms (Views: 31.9ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:53:03 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:53:03 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.4ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.1ms)
+Completed 200 OK in 29ms (Views: 27.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:53:17 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 00:53:17.587609"], ["id", 2]]
+  [1m[35m (135.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 143ms (ActiveRecord: 137.6ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:53:17 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.0ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.7ms)
+Completed 200 OK in 50ms (Views: 46.0ms | ActiveRecord: 0.6ms)
+
+
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:53:42 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 00:53:42.622845"], ["id", 2]]
+  [1m[35m (132.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 138ms (ActiveRecord: 132.8ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:53:42 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.1ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.5ms)
+Completed 200 OK in 55ms (Views: 53.3ms | ActiveRecord: 0.6ms)
+
+
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:53:47 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:53:47 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.5ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.9ms)
+Completed 200 OK in 41ms (Views: 39.3ms | ActiveRecord: 0.4ms)
+
+
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:20 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:20 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.5ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (5.4ms)
+Completed 200 OK in 32ms (Views: 29.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:25 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:25 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.3ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (1.8ms)
+Completed 200 OK in 30ms (Views: 28.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:29 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 8ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:29 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.1ms)
+Completed 200 OK in 41ms (Views: 39.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:30 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 4ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:30 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.2ms)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (6.4ms)
+Completed 200 OK in 38ms (Views: 33.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:30 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 16ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:31 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (6.4ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.5ms)
+Completed 200 OK in 43ms (Views: 40.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:32 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 6ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:32 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.3ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.5ms)
+Completed 200 OK in 44ms (Views: 41.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:32 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:32 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.8ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.3ms)
+Completed 200 OK in 43ms (Views: 41.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:32 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 10ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:32 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (4.5ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (6.5ms)
+Completed 200 OK in 82ms (Views: 76.4ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:55:40 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 00:55:40.240489"], ["id", 2]]
+  [1m[35m (183.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 192ms (ActiveRecord: 184.7ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:40 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (15.4ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.8ms)
+Completed 200 OK in 94ms (Views: 91.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 21:55:42 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 00:55:42.992700"], ["id", 2]]
+  [1m[35m (89.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 103ms (ActiveRecord: 90.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:43 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (3.8ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (10.7ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.1ms)
+Completed 200 OK in 88ms (Views: 82.0ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 21:55:44 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 10ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 21:55:44 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.4ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.5ms)
+Completed 200 OK in 67ms (Views: 64.0ms | ActiveRecord: 0.7ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 21:59:34 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"oPxIdwsVb5OVYr5CyQw9/XlvYpvoGq7lR2Tk4ep9mtX5m9xmljZDQQflOZ9qNx2aDlVHFkVRvLK8eihvCg7s9A=="}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 9ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:59:34 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (13.4ms)
+  Rendered shared/_navbar.html.erb (1.5ms)
+Completed 200 OK in 46ms (Views: 40.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2017-11-16 21:59:39 -0300
+Processing by Users::RegistrationsController#new as HTML
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (1.4ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (12.6ms)
+  Rendered shared/_navbar.html.erb (1.4ms)
+Completed 200 OK in 78ms (Views: 75.2ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2017-11-16 21:59:54 -0300
+Processing by Users::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"JH6AzgfoIopNB50+LqVaqdqBrpwFeeRkLfxv7FObxA/Sye1o3GknzH+di0mJsZh979YycUJbWE17hxyh3bS6Cg==", "user"=>{"email"=>"san.storres2@gmail.com", "name"=>"awqweq", "username"=>"qweqwe", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "san.storres2@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "name", "username") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "san.storres2@gmail.com"], ["encrypted_password", "$2a$11$A9tpWG3FQuB/xkRI4FSA0.7gEtEeRqi3yenYdTjKFteJyHbSf9pSC"], ["created_at", "2017-11-17 00:59:54.787745"], ["updated_at", "2017-11-17 00:59:54.787745"], ["name", "awqweq"], ["username", "qweqwe"]]
+  [1m[35m (188.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[33mUPDATE "users" SET "sign_in_count" = ?, "current_sign_in_at" = ?, "last_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_ip" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["sign_in_count", 1], ["current_sign_in_at", "2017-11-17 00:59:54.981397"], ["last_sign_in_at", "2017-11-17 00:59:54.981397"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_ip", "127.0.0.1"], ["updated_at", "2017-11-17 00:59:54.984510"], ["id", 3]]
+  [1m[35m (121.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 523ms (ActiveRecord: 316.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:59:55 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (8.6ms)
+  Rendered shared/_navbar.html.erb (1.3ms)
+Completed 200 OK in 78ms (Views: 73.1ms | ActiveRecord: 0.7ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-11-16 21:59:58 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"aI8Sh8q6K2TrrmEy5PC3L1N0kM5vytIuZLVayo4DN169HnJv74SWQMwmn4Vz/OY4RBN8DdJ3YNWK2cBo4aVV1Q=="}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 6ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 21:59:58 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.2ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  Rendered histories/index.html.erb within layouts/application (3.2ms)
+  Rendered shared/_navbar.html.erb (2.3ms)
+Completed 200 OK in 57ms (Views: 55.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-11-16 22:00:01 -0300
+Processing by Devise::SessionsController#new as HTML
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (4.8ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (16.7ms)
+  Rendered shared/_navbar.html.erb (3.3ms)
+Completed 200 OK in 72ms (Views: 69.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-11-16 22:00:05 -0300
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Esh2mzu/Jk4lHHcFRDMtni0R+O2Uc3O2tsJW6/zDTXhy1jQis2lmAXdPL52NuFVfYAyf+WHVKL6kIhcbUy7xwQ==", "user"=>{"email"=>"san.storres@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "san.storres@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "users" SET "current_sign_in_at" = ?, "last_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["current_sign_in_at", "2017-11-17 01:00:05.595775"], ["last_sign_in_at", "2017-11-17 00:41:58.126192"], ["sign_in_count", 5], ["updated_at", "2017-11-17 01:00:05.596644"], ["id", 1]]
+  [1m[35m (208.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 382ms (ActiveRecord: 209.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-16 22:00:05 -0300
+Processing by HistoriesController#index as HTML
+  Rendering histories/index.html.erb within layouts/application
+  [1m[36mHistory Load (0.3ms)[0m  [1m[34mSELECT "histories".* FROM "histories"[0m
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered histories/index.html.erb within layouts/application (14.7ms)
+  Rendered shared/_navbar.html.erb (4.1ms)
+Completed 200 OK in 77ms (Views: 71.0ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:00:08 -0300
+Processing by AdminsController#index as HTML
+  Parameters: {"authenticity_token"=>"55CgbqPoISvg1/ne/vVrPisvGgI5hg1FofglfJHhoWtaqDdNfa2A8PHG4ttNzz4e+HBgOlUJGYtCBbRv3/iZug=="}
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (1.5ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.0ms)
+Completed 200 OK in 113ms (Views: 109.9ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 22:00:11 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (4.6ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 01:00:11.296393"], ["id", 2]]
+  [1m[35m (178.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 192ms (ActiveRecord: 183.3ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:00:11 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (4.4ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.8ms)
+Completed 200 OK in 63ms (Views: 60.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admins/3/edit" for 127.0.0.1 at 2017-11-16 22:00:12 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 01:00:12.838841"], ["id", 3]]
+  [1m[35m (221.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 236ms (ActiveRecord: 223.0ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:00:13 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (2.2ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (4.7ms)
+Completed 200 OK in 51ms (Views: 48.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admins/3/edit" for 127.0.0.1 at 2017-11-16 22:00:14 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 01:00:14.039404"], ["id", 3]]
+  [1m[35m (76.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 91ms (ActiveRecord: 78.0ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:00:14 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (3.7ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (3.1ms)
+Completed 200 OK in 86ms (Views: 83.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 22:00:15 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 01:00:15.207942"], ["id", 2]]
+  [1m[35m (201.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 214ms (ActiveRecord: 202.8ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:00:15 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (6.7ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.8ms)
+Completed 200 OK in 77ms (Views: 74.1ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/admins/1/edit" for 127.0.0.1 at 2017-11-16 22:00:16 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:00:16 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered admins/index.html.erb within layouts/application (12.2ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered shared/_navbar.html.erb (2.6ms)
+Completed 200 OK in 57ms (Views: 53.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:01:26 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (14.8ms)
+  Rendered shared/_navbar.html.erb (1.2ms)
+Completed 200 OK in 77ms (Views: 73.9ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:02:14 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (5.4ms)
+  Rendered shared/_navbar.html.erb (1.9ms)
+Completed 200 OK in 77ms (Views: 73.8ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:02:28 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (6.8ms)
+  Rendered shared/_navbar.html.erb (1.6ms)
+Completed 200 OK in 55ms (Views: 50.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:02:35 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (3.2ms)
+  Rendered shared/_navbar.html.erb (1.6ms)
+Completed 200 OK in 41ms (Views: 37.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:02:58 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (11.3ms)
+  Rendered shared/_navbar.html.erb (2.3ms)
+Completed 200 OK in 91ms (Views: 89.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 22:03:02 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "t"], ["updated_at", "2017-11-17 01:03:02.782000"], ["id", 2]]
+  [1m[35m (74.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 91ms (ActiveRecord: 75.7ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:03:02 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (5.7ms)
+  Rendered shared/_navbar.html.erb (1.1ms)
+Completed 200 OK in 58ms (Views: 55.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/admins/2/edit" for 127.0.0.1 at 2017-11-16 22:03:03 -0300
+Processing by AdminsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[33mUPDATE "users" SET "admin" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["admin", "f"], ["updated_at", "2017-11-17 01:03:03.667131"], ["id", 2]]
+  [1m[35m (109.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admins
+Completed 302 Found in 125ms (ActiveRecord: 112.7ms)
+
+
+Started GET "/admins" for 127.0.0.1 at 2017-11-16 22:03:03 -0300
+Processing by AdminsController#index as HTML
+  Rendering admins/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered admins/index.html.erb within layouts/application (6.4ms)
+  Rendered shared/_navbar.html.erb (1.3ms)
+Completed 200 OK in 66ms (Views: 61.5ms | ActiveRecord: 1.1ms)
+
+
