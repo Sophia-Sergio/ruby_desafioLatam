@@ -1,0 +1,40 @@
+<h1>Tareas</h1>
+
+
+  <div class="row">
+    <% @tasks.each do |task| %>
+      <div class="col-sm-6 col-md-4" style="height: 475px">
+        <div class="thumbnail">
+          <a href="<%= task_path(task) %>">
+            <img src="<%= task.image %>" alt="...">
+          </a>
+          <div class="caption" style="height: 258px">
+            <h3><%= task.name %></h3>
+            <p><%= task.desc %></p>
+            <p>
+              <% if Doing.where(task_id: task.id, user_id: current_user.id).count > 0 %>
+                <% if Doing.where(task_id: task.id, user_id: current_user.id).first.completed %>
+                  <div class="well"> <span style="display: inline-block; width:65%">Tarea Completada</span>   
+                    <a href="<%= task_path(task) %>" data-method="put" class="btn btn-warning" role="Completar">Deshacer</a>
+                  </div>                            
+                <% else %>
+                <div class="well"> <span style="display: inline-block; width:65%">Tarea sin hacer</span>   
+                    <a href="<%= task_path(task) %>" data-method="put" class="btn btn-success" role="button">Completar</a>
+                </div>
+                <% end %>
+              <% else %>
+                <div class="well"> <span style="display: inline-block; width:65%">Tarea sin hacer</span>   
+                    <a href="<%= task_path(task) %>" data-method="put" class="btn btn-success" role="button">Completar</a>
+                </div>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>

@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @task.desc %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
+<p id="notice"><%= notice %></p>
+
+<h1>Primeros 5</h1>
+
+<table class="table" style="width:800px">
+  <thead>
+    <tr>
+      <th>Avatar</th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Completada</th>
+      <th>Ranking</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @doings.limit(5).each_with_index do |doing, i| %>
+      <tr>
+        <td><img src="<%= doing.user.image %>" alt=""></td>
+        <td><%= doing.user.name %></td>
+        <td><%= doing.user.email %></td>
+        <td><%= doing.updated_at %></td>
+        <td><%= i+1 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Usuarios que han completado esta tarea</h1>
+
+<table class="table" style="width:800px">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @doings.each do |doing| %>
+      <tr>
+        <td><%= doing.user.name %></td>
+        <td><%= doing.user.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
