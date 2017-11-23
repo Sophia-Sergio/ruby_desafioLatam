@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <input type="text" name="calculator" value="">
+    <hr>
+    <br>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">1</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">2</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">3</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">4</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">5</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">6</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">7</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">8</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">9</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">0</button>
+    <hr>
+    <br>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">+</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">-</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">*</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">/</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">(</button>
+    <button class="btn" onclick="inputAdd(this)" type="button" name="button">)</button>
+    <button class="btn" onclick="deleteLast()" type="button" name="button"><-</button>
+    <hr>
+    <br>
+    <button class="result" type="button" name="result" onclick="calcTotal()">=</button>
+    <script type="text/javascript">
+      var result = document.getElementsByName("result")[0];
+      var calculator = document.getElementsByName("calculator")[0];
+
+      function deleteLast(){
+        calculator.value =  calculator.value.substr(0 , calculator.value.length-1)
+      }
+      function inputAdd(number){
+        console.log(number.innerText);
+        calculator.value = calculator.value + number.innerText;
+      }
+
+      var calcTotal = function(){
+        calculator.value = eval(calculator.value);
+      }
+    </script>
+  </body>
+</html>
